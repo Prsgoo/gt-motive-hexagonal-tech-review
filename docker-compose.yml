@@ -1,0 +1,27 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: gtmotive-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  api:
+    build:
+      context: .
+      dockerfile: src/GtMotive.Estimate.Microservice.Host/Dockerfile
+    container_name: gtmotive-api
+    depends_on:
+      - mongo
+    ports:
+      - "8080:8080"
+    environment:
+      # Override config so the API connects to the mongo container by service name "mongo"
+      MongoDb__ConnectionString: "mongodb://mongo:27017"
+      MongoDb__MongoDbDatabaseName: "GtMotiveEstimate"
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_ENVIRONMENT: Development
+
+volumes:
+  mongo_data:

@@ -1,0 +1,6 @@
+<Project>
+  <PropertyGroup>
+    <!-- Suppress CS1591 (missing XML comments) and SA1600 (StyleCop: elements must be documented) across all projects -->
+    <NoWarn>$(NoWarn);1591;SA1600</NoWarn>
+  </PropertyGroup>
+</Project>
